@@ -81,34 +81,42 @@ PowerBI 散点图并发挥到极致，并给出一种可以动态无级伸缩适
 
 3. Python 代码案例
 
+import matplotlib.pyplot as plt
+import numpy as np
+from pandas import DataFrame
+import pandas as pd
 
-iimport matplotlib.pyplot as plt
+df =pd.read_csv('C:/Users/ttrfakd/BEV_01.csv')
+print(df.head())
+#print(df.shape) 
 
-# 为每个点添加对应的城市名称
+df1 = df.iloc[:11,:]
+
+
+# 为每个点添加对应的车型名称
 plt.figure(figsize=(10, 8))
 # 基础散点图：这里需要单独拆开 x，y 轴和希望配对的标签，为下面的轮子做准备
-x, y = df['经济总量水平'], df['人均水平']
-label = df['area']
+x, y = df1['Range'], df1['Energy Content']
+label = df['Model variants']
 plt.scatter(x, y)
-plt.xlabel('经济总量水平'); plt.ylabel('人均水平')
+plt.xlabel('Range'); plt.ylabel('Energy Content')
 
 # 对散点图中的每一个点进行文字标注
  ## 固定代码，无需深究，拿来即用
 for a,b,l in zip(x,y,label): # zip 拉链函数将其配对组合
-    plt.text(a, b+0.1, '%s.' % l, ha='center', va='bottom', 
-                                             fontsize=14)
+    plt.text(a, b+1.0, '%s.' % l, ha='center', va='bottom', 
+                                             fontsize=10)
                # 0.1 向上轻微偏移
         
 # 添加特定分割线
  ## vlines: vertical 垂直于 x 轴的线，在变量'经济总量'的均值处开始画，
    ## y 轴的范围[1.5, 3]
-plt.vlines(x=df['经济总量水平'].mean(), ymin=-1.5, ymax=3, 
+plt.vlines(x=df['Range'].mean(), ymin=20, ymax=150, 
            colors='red', linewidth=2)
-plt.hlines(y=df['人均水平'].mean(), xmin=-4, xmax=6,
+plt.hlines(y=df['Energy Content'].mean(), xmin=200, xmax=800,
            colors='red', linewidth=2)
 
 # 背景网格
 plt.grid(True)
 # 定制需求：隐去四周的边框线条
 # sns.despine(trim=True, left=True, bottom=True)
-Source: https://blog.csdn.net/weixin_43329700/article/details/108156818  
